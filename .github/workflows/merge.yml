@@ -6,8 +6,8 @@ name: auto merge
 # events but only for the master branch
 # Trigger: On merge of Develop to Master
 on:
-  push:
-    branches: [ master ]
+  #push:
+    #branches: [ master ]
 # todo: how to make it only from develop?
   pull_request:
     branches: [ develop ]
