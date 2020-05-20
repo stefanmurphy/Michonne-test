@@ -7,8 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Sends a message to Slack when a push, a pull request or an issue is made
     steps:
-      - name: Send message to Slack API
-        uses: archive/github-actions-slack@master
+    uses: archive/github-actions-slack@v1.0.2
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: sre_testing
