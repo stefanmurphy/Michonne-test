@@ -1,8 +1,10 @@
 name: Merge staging branch to biz
-on:
-  push:
-    branches:
-      - 'master'
+on: [push, pull_request, issues]
+#on:
+#  push:
+#    branches:
+#      - 'master'
+
 jobs:
   merge-branch:
     runs-on: ubuntu-latest
