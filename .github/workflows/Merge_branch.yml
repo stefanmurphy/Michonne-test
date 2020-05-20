@@ -1,4 +1,4 @@
-name: Merge staging branch to biz
+name: Merge staging branch to vast
 on: [push, pull_request, issues]
 #on:
 #  push:
@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Merge to uat branch
+      - name: Merge to vast branch
         uses: devmasx/merge-branch@v1.1.0
         with:
           type: now
-          target_branch: 'biz'
+          target_branch: 'vast'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
