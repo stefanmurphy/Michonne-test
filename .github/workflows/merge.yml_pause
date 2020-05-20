@@ -6,16 +6,15 @@ name: auto merge
 # events but only for the master branch
 # Trigger: On merge of Develop to Master
 on:
-  #push:
-    #branches: [ master ]
-# todo: how to make it only from develop?
+  # todo: how to make it only from develop?
   pull_request:
-    branches: [ develop ]
+    branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  # 
   merge:
+    name: auto_merge_v1
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -24,12 +23,12 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
-
-    # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+#slackNotification:
+ #   name: Slack Notification
+  #  runs-on: ubuntu-latest
+   # steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2.0.2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
