@@ -1,13 +1,14 @@
 name: Merge staging branch to vast
 on: [push, pull_request, issues]
-#on:
+#on: [push: branches: master ]
 #  push:
 #    branches:
 #      - 'master'
 
 jobs:
-  merge-branch:
+  job-merge-branch:
     name: merge-branch x
+    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -18,13 +19,12 @@ jobs:
           target_branch: 'vast'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
+ 
   
-  slackNotification:
+  
+  job-slackNotification:
     name: Slack Notification x
+    needs: job-merge-branch
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
