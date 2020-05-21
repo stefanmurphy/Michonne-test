@@ -19,16 +19,10 @@ jobs:
           target_branch: 'vast'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
- 
+      - uses: act10ns/slack@v1
+        with: 
+          status: ${{ job.status }}
+        if: always()
   
   
-  job-slackNotification:
-    name: Slack Notification x
-    needs: job-merge-branch
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2.0.2
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  
