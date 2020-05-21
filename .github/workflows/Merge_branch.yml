@@ -22,8 +22,7 @@ jobs:
       - uses: act10ns/slack@v1
         with: 
           status: ${{ job.status }}
-          if_mention: failure
-        if: always()
+        if: failure()
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   
