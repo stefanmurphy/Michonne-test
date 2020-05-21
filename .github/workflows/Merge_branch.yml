@@ -1,9 +1,9 @@
 name: Merge staging branch to vast
-on: [push, pull_request, issues]
-#on:
-#  push:
-#    branches:
-#      - 'master'
+#on: [push, pull_request, issues]
+on:
+  push:
+    branches:
+      - 'master'
 
 jobs:
   merge-branch:
