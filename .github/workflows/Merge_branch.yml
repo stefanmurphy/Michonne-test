@@ -1,13 +1,13 @@
 name: Merge staging branch to vast
-on: [push, pull_request, issues]
-#on: [push: branches: master ]
-#  push:
-#    branches:
-#      - 'master'
+#on: [push, pull_request, issues]
+on:
+  push:
+    branches:
+      - 'master'
 
 jobs:
   job-merge-branch:
-    name: merge-branch x
+    name: merge-branch
     continue-on-error: true
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +22,7 @@ jobs:
       - uses: act10ns/slack@v1
         with: 
           status: ${{ job.status }}
-        if: always()
+        if: failure()
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   
