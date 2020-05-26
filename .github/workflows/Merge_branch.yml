@@ -1,17 +1,36 @@
-name: Merge staging branch to vast
-#on: [push, pull_request, issues]
+# Ticket: FOUNDSRE-79
+# Description: On update of MASTER merge MASTER to BRANCH
+#
+# Original request was on merge of DEVELOP to MASTER merge
+#    MASTER to a list of branches.  Send Slack message on merge failure
+#
+# Requires SLACK_WEBHOOK_URL Slack app set up as Hithub secret
+#
+# Phase 1: On any merge to MASTER merge MASTER to one branch
+#
+# TODO: Merge to multiple branches, parameterize
+# TODO: Restrict on only merge of DEVELOP to MASTER
+  
+
+name: Auto merge MASTER branch to VAST
+#on: [push, pull_request, issues]  #for testing
 on:
   push:
     branches:
       - 'master'
 
 jobs:
-  job-merge-branch:
+  merge-branch:
     name: merge-branch
-    continue-on-error: true
+    
+    # needed so the Slack message sends after is merge fails
+    continue-on-error: true 
     runs-on: ubuntu-latest
     steps:
+      #checkout MASTER
       - uses: actions/checkout@master
+      
+      #merge VAST to MASTER
       - name: Merge to vast branch
         uses: devmasx/merge-branch@v1.1.0
         with:
@@ -19,6 +38,8 @@ jobs:
           target_branch: 'vast'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      
+      #if the merge fails, send a Slack message
       - uses: act10ns/slack@v1
         with: 
           status: ${{ job.status }}
