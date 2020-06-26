@@ -38,7 +38,7 @@ jobs:
         uses: devmasx/merge-branch@v1.1.0
         with:
           type: now
-          target_branch: ${{ matrix.node }}
+          target_branch: ${{ matrix.branch }}
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       
