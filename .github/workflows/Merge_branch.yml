@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-      branch: ['sour', 'terra']
+        branch: ['sour', 'terra']
     steps:
       #checkout MASTER
       - uses: actions/checkout@master
