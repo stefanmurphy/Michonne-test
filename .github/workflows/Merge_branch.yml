@@ -26,6 +26,9 @@ jobs:
     # needed so the Slack message sends after is merge fails
     continue-on-error: true 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+      branch: ['sour', 'terra']
     steps:
       #checkout MASTER
       - uses: actions/checkout@master
@@ -35,7 +38,7 @@ jobs:
         uses: devmasx/merge-branch@v1.1.0
         with:
           type: now
-          target_branch: 'vast'
+          target_branch: ${{ matrix.node }}
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       
