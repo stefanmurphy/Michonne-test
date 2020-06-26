@@ -26,6 +26,9 @@ jobs:
     # needed so the Slack message sends after is merge fails
     continue-on-error: true 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+      branch: ['sour', 'terra']
     steps:
       #checkout MASTER
       - uses: actions/checkout@master
@@ -35,19 +38,19 @@ jobs:
         uses: devmasx/merge-branch@v1.1.0
         with:
           type: now
-          target_branch: 'vast'
+          target_branch: ${{ matrix.node }}
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       
-      #if the merge fails, send a Slack message
-      - name: slack - GitHub Actions Slack integration
-        uses: act10ns/slack@v1.0.9
-        with: 
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  #    #if the merge fails, send a Slack message
+  #    - name: slack - GitHub Actions Slack integration
+  #     uses: act10ns/slack@v1.0.9
+  #      with: 
+  #        status: ${{ job.status }}
+  #        steps: ${{ toJson(steps) }}
+  #      if: failure()
+  #      env:
+  #        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   
   
   
