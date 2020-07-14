@@ -37,7 +37,7 @@ jobs:
       #merge 
       - name: Merge to new branch
         uses: devmasx/merge-branch@v1.1.0
-        if: $GITHUB_HEAD_REF == 'master'
+        if: github.head_ref == 'master'
         with:
           type: now
           target_branch: 'new'
