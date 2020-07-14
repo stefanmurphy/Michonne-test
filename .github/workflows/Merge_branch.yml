@@ -32,12 +32,12 @@ jobs:
       - uses: actions/checkout@master
      
       - name: debug
-        run: echo $GITHUB_HEAD_REF
+        run: echo $GITHUB_BASE_REF to $GITHUB_HEAD_REF
         
       #merge 
       - name: Merge to new branch
         uses: devmasx/merge-branch@v1.1.0
-        if: github.head_ref == 'refs/heads/master'
+        if: $GITHUB_HEAD_REF == 'master'
         with:
           type: now
           target_branch: 'new'
