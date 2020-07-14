@@ -12,7 +12,7 @@
 # TODO: Restrict on only merge of DEVELOP to MASTER
   
 
-name: Auto merge MASTER branch to SOUR
+name: Auto merge develop branch to XXXXX
 #on: [push, pull_request, issues]  #for testing
 on:
   pull_request:
@@ -31,13 +31,13 @@ jobs:
       #checkout MASTER
       - uses: actions/checkout@master
       
-      #merge MASTER to SOUR
-      - name: Merge to sour branch
+      #merge 
+      - name: Merge to new branch
         uses: devmasx/merge-branch@v1.1.0
         if: github.head_ref == 'refs/heads/master'
         with:
           type: now
-          target_branch: 'sour'
+          target_branch: 'new'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       
