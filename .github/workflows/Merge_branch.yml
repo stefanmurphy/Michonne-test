@@ -6,18 +6,19 @@
 #
 # Requires SLACK_WEBHOOK_URL Slack app set up as Hithub secret
 #
-# Phase 1: On any merge to MASTER merge MASTER to one branch
+# Phase 1: On any merge to MASTER merge MASTER to one branch: sour
 #
 # TODO: Merge to multiple branches, parameterize
 # TODO: Restrict on only merge of DEVELOP to MASTER
   
 
-name: Auto merge MASTER branch to VAST
+name: Auto merge develop branch to XXXXX
 #on: [push, pull_request, issues]  #for testing
 on:
-  push:
+  pull_request:
     branches:
-      - 'master'
+      - 'develop'
+    types: [ closed ]
 
 jobs:
   merge-branch:
@@ -29,13 +30,17 @@ jobs:
     steps:
       #checkout MASTER
       - uses: actions/checkout@master
-      
-      #merge VAST to MASTER
-      - name: Merge to vast branch
+     
+      - name: debug
+        run: echo $GITHUB_BASE_REF to $GITHUB_HEAD_REF
+        
+      #merge 
+      - name: Merge to new branch
         uses: devmasx/merge-branch@v1.1.0
+        if: github.head_ref == 'master'
         with:
           type: now
-          target_branch: 'vast'
+          target_branch: 'new'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       
@@ -46,6 +51,3 @@ jobs:
         if: failure()
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  
-  
-  
