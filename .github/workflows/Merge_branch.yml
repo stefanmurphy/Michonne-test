@@ -1,15 +1,5 @@
 # Ticket: FOUNDSRE-79
-# Description: On update of MASTER merge MASTER to BRANCH
-#
-# Original request was on merge of DEVELOP to MASTER merge
-#    MASTER to a list of branches.  Send Slack message on merge failure
-#
-# Requires SLACK_WEBHOOK_URL Slack app set up as Hithub secret
-#
-# Phase 1: On any merge to MASTER merge MASTER to one branch: sour
-#
-# TODO: Merge to multiple branches, parameterize
-# TODO: Restrict on only merge of DEVELOP to MASTER
+# Description: On closed pull request from master to develop, merge master to a list of branches
   
 
 name: Auto merge develop branch to XXXXX
@@ -30,14 +20,13 @@ jobs:
       #checkout MASTER
       - uses: actions/checkout@master
 
-     
       - name: debug
         run: echo $GITHUB_BASE_REF to $GITHUB_HEAD_REF
         
       #merge 
       - name: Merge to branch
         uses: devmasx/merge-branch@v1.1.0
-        if: github.head_ref == 'master'
+        if: github.head_ref == 'master' && pull_request.merged == 'true'
         with:
           type: now
           target_branch: 'sweet'
@@ -45,9 +34,9 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       
       #if the merge fails, send a Slack message
-      - uses: act10ns/slack@v1
-        with: 
-          status: ${{ job.status }}
-        if: failure()
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #- uses: act10ns/slack@v1
+      #  with: 
+      #    status: ${{ job.status }}
+      #  if: failure()
+      #  env:
+      #    SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
