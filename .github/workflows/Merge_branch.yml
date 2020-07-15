@@ -4,10 +4,12 @@
 
 name: Auto merge develop branch to XXXXX
 on:
-  pull_request:
-    branches:
-      - 'develop'
-    types: [ closed ]
+  push:
+    
+  #pull_request:
+  #  branches:
+  #    - 'develop'
+  #  types: [ closed ]
 
 jobs:
   merge-branch:
