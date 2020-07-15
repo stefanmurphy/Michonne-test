@@ -16,6 +16,9 @@ jobs:
     # needed so the Slack message sends after is merge fails
     continue-on-error: true 
     runs-on: ubuntu-latest
+    strategy:	
+      matrix:	
+        branch: ['sour', 'terra']
     steps:
       #checkout MASTER
       - uses: actions/checkout@master
@@ -29,7 +32,7 @@ jobs:
         if: github.head_ref == 'master' && pull_request.merged == 'true'
         with:
           type: now
-          target_branch: 'sweet'
+          target_branch: ${{ matrix.branch }}	
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       
