@@ -1,23 +1,13 @@
 # Ticket: FOUNDSRE-79
-# Description: On update of MASTER merge MASTER to BRANCH
-#
-# Original request was on merge of DEVELOP to MASTER merge
-#    MASTER to a list of branches.  Send Slack message on merge failure
-#
-# Requires SLACK_WEBHOOK_URL Slack app set up as Hithub secret
-#
-# Phase 1: On any merge to MASTER merge MASTER to one branch
-#
-# TODO: Merge to multiple branches, parameterize
-# TODO: Restrict on only merge of DEVELOP to MASTER
+# Description: On closed pull request from master to develop, merge master to a list of branches
   
 
-name: Auto merge MASTER branch to VAST
-#on: [push, pull_request, issues]  #for testing
+name: Auto merge develop branch to XXXXX
 on:
-  push:
+  pull_request:
     branches:
-      - 'master'
+      - 'develop'
+    types: [ closed ]
 
 jobs:
   merge-branch:
@@ -26,31 +16,30 @@ jobs:
     # needed so the Slack message sends after is merge fails
     continue-on-error: true 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
+    strategy:	
+      matrix:	
         branch: ['sour', 'terra']
     steps:
       #checkout MASTER
       - uses: actions/checkout@master
-      
-      #merge VAST to MASTER
-      - name: Merge to vast branch
+
+      - name: debug
+        run: echo $GITHUB_BASE_REF to $GITHUB_HEAD_REF
+        
+      #merge 
+      - name: Merge to branch
         uses: devmasx/merge-branch@v1.1.0
+        if: github.head_ref == 'master' # && pull_request.merged == 'true'
         with:
           type: now
-          target_branch: ${{ matrix.branch }}
+          target_branch: ${{ matrix.branch }}	
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       
-  #    #if the merge fails, send a Slack message
-  #    - name: slack - GitHub Actions Slack integration
-  #     uses: act10ns/slack@v1.0.9
-  #      with: 
-  #        status: ${{ job.status }}
-  #        steps: ${{ toJson(steps) }}
-  #      if: failure()
-  #      env:
-  #        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  
-  
-  
+      #if the merge fails, send a Slack message
+      #- uses: act10ns/slack@v1
+      #  with: 
+      #    status: ${{ job.status }}
+      #  if: failure()
+      #  env:
+      #    SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
