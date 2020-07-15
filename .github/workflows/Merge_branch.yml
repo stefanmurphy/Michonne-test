@@ -24,8 +24,7 @@ jobs:
       - uses: actions/checkout@master
 
       - name: debug
-        run: echo $GITHUB_BASE_REF to $GITHUB_HEAD_REF
-          echo $GITHUB_event
+        run: echo $GITHUB_BASE_REF to $GITHUB_HEAD_REF and $GITHUB_event
         
       #merge 
       - name: Merge to branch
