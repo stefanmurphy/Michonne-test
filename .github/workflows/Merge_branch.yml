@@ -2,7 +2,7 @@
 # Description: On closed and merged pull request from master to develop, merge master to a list of branches
   
 
-name: Auto merge develop branch to XXXXX
+name: Auto merge develop to branches
 on:
   #push:
     
