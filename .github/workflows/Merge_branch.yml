@@ -1,9 +1,11 @@
 # Ticket: FOUNDSRE-79
-# Description: On closed pull request from master to develop, merge master to a list of branches
+# Description: On closed and merged pull request from master to develop, merge master to a list of branches
   
 
-name: Auto merge develop branch to XXXXX
+name: Auto merge develop to branches
 on:
+  #push:
+    
   pull_request:
     branches:
       - 'develop'
@@ -22,14 +24,11 @@ jobs:
     steps:
       #checkout MASTER
       - uses: actions/checkout@master
-
-      - name: debug
-        run: echo $GITHUB_BASE_REF to $GITHUB_HEAD_REF
         
       #merge 
       - name: Merge to branch
         uses: devmasx/merge-branch@v1.1.0
-        if: github.head_ref == 'master' # && pull_request.merged == 'true'
+        if: github.head_ref == 'master' && github.event.pull_request.merged == true
         with:
           type: now
           target_branch: ${{ matrix.branch }}	
